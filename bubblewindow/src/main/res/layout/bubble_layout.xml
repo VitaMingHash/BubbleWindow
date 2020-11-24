@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <View
+            android:id="@+id/bubble_angle_top"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bubblewindow_angle_top_selector"
+            android:clickable="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bubble_layout"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bubblewindow_background"
+        android:orientation="vertical" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <View
+            android:id="@+id/bubble_angle_bottom"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bubblewindow_angle_bottom_selector"
+            android:clickable="true" />
+    </RelativeLayout>
+</LinearLayout>

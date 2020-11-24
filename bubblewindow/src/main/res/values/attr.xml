@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageGridView">
+        <attr name="singleSize" format="integer" />
+        <attr name="lines" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="radius" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="CodeEdittext">
+        <attr name="maxLength" format="integer" />
+        <attr name="spaceWeight" format="float" />
+        <attr name="bottomColor" format="reference" />
+        <attr name="corsorColor" format="reference" />
+    </declare-styleable>
+</resources>
