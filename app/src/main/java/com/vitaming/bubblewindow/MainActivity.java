@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vitaming.bubblewindow.itemview.TextItemView;
-import com.vitaming.bubblewindow.utils.ScreenUtil;
 
 
 public class MainActivity extends FragmentActivity {

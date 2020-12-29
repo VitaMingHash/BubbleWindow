@@ -213,9 +213,11 @@ public class BubbleWindow {
         WindowManager.LayoutParams lp = window.getAttributes();
         if (direction == Direction.TOP) {
             int commonX = (int) (view.getX() + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
-            int commonY;
-            if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar().isShowing()) {
-                commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) - getDialogHeight() - ScreenUtil.dp2px(context, marging);
+            int commonY = 0;
+            if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar() != null) {
+                if (((AppCompatActivity) context).getSupportActionBar().isShowing()) {
+                    commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) - getDialogHeight() - ScreenUtil.dp2px(context, marging);
+                }
             } else {
                 commonY = (int) view.getY() - getDialogHeight() - ScreenUtil.dp2px(context, marging);
             }
@@ -244,9 +246,11 @@ public class BubbleWindow {
             }
         } else if (direction == Direction.BOTTOM) {
             int commonX = (int) (view.getX() + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
-            int commonY;
-            if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar().isShowing()) {
-                commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
+            int commonY = 0;
+            if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar() != null) {
+                if (((AppCompatActivity) context).getSupportActionBar().isShowing()) {
+                    commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
+                }
             } else {
                 commonY = (int) view.getY() + view.getHeight() - ScreenUtil.dp2px(context, marging);
             }
