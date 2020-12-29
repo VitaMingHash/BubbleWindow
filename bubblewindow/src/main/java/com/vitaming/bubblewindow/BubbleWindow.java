@@ -211,20 +211,22 @@ public class BubbleWindow {
         Window window = dialog.getWindow();
         window.setGravity(Gravity.TOP | Gravity.LEFT);
         WindowManager.LayoutParams lp = window.getAttributes();
+        int[] windowLocation = new int[2];
+        view.getLocationOnScreen(windowLocation);
         if (direction == Direction.TOP) {
-            int commonX = (int) (view.getX() + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
+            int commonX = (int) (windowLocation[0] + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
             int commonY = 0;
             if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar() != null) {
                 if (((AppCompatActivity) context).getSupportActionBar().isShowing()) {
-                    commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) - getDialogHeight() - ScreenUtil.dp2px(context, marging);
+                    commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context) + ScreenUtil.getActionBarHeight(context) - getDialogHeight() - ScreenUtil.dp2px(context, marging);
                 }
             } else {
-                commonY = (int) view.getY() - getDialogHeight() - ScreenUtil.dp2px(context, marging);
+                commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context) - getDialogHeight() - ScreenUtil.dp2px(context, marging);
             }
             //X方向限制
             if (commonX < ScreenUtil.dp2px(context, padding)) {
                 lp.x = ScreenUtil.dp2px(context, padding);
-            } else if ((int) (view.getX() + ScreenUtil.dp2px(context, dialogWidth)) > ScreenUtil.getScreenWidth(context)) {
+            } else if ((int) (windowLocation[0] + ScreenUtil.dp2px(context, dialogWidth)) > ScreenUtil.getScreenWidth(context)) {
                 lp.x = ScreenUtil.getScreenWidth(context) - ScreenUtil.dp2px(context, padding) - ScreenUtil.dp2px(context, dialogWidth);
             } else {
                 lp.x = commonX;
@@ -236,7 +238,7 @@ public class BubbleWindow {
                 lp.y = commonY;
             }
             //移动角的位置
-            float commonMove = view.getX() + view.getWidth() / 2 - (lp.x + ScreenUtil.dp2px(context, dialogWidth / 2));
+            float commonMove = windowLocation[0] + view.getWidth() / 2 - (lp.x + ScreenUtil.dp2px(context, dialogWidth / 2));
             if (commonMove > ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 20)) {
                 angleView.setTranslationX(ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 20));
             } else if (commonMove < -(ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 10))) {
@@ -245,19 +247,19 @@ public class BubbleWindow {
                 angleView.setTranslationX(commonMove);
             }
         } else if (direction == Direction.BOTTOM) {
-            int commonX = (int) (view.getX() + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
+            int commonX = (int) (windowLocation[0] + view.getWidth() / 2 - ScreenUtil.dp2px(context, dialogWidth / 2));
             int commonY = 0;
             if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar() != null) {
                 if (((AppCompatActivity) context).getSupportActionBar().isShowing()) {
-                    commonY = (int) view.getY() + ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
+                    commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context)+ ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
                 }
             } else {
-                commonY = (int) view.getY() + view.getHeight() - ScreenUtil.dp2px(context, marging);
+                commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
             }
             //X方向限制
             if (commonX < ScreenUtil.dp2px(context, padding)) {
                 lp.x = ScreenUtil.dp2px(context, padding);
-            } else if ((int) (view.getX() + ScreenUtil.dp2px(context, dialogWidth)) > ScreenUtil.getScreenWidth(context)) {
+            } else if ((int) (windowLocation[0] + ScreenUtil.dp2px(context, dialogWidth)) > ScreenUtil.getScreenWidth(context)) {
                 lp.x = ScreenUtil.getScreenWidth(context) - ScreenUtil.dp2px(context, padding) - ScreenUtil.dp2px(context, dialogWidth);
             } else {
                 lp.x = commonX;
@@ -269,7 +271,7 @@ public class BubbleWindow {
                 lp.y = commonY;
             }
             //移动角的位置
-            float commonMove = view.getX() + view.getWidth() / 2 - (lp.x + ScreenUtil.dp2px(context, dialogWidth / 2));
+            float commonMove = windowLocation[0] + view.getWidth() / 2 - (lp.x + ScreenUtil.dp2px(context, dialogWidth / 2));
             if (commonMove > ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 20)) {
                 angleView.setTranslationX(ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 20));
             } else if (commonMove < -(ScreenUtil.dp2px(context, dialogWidth / 2) - ScreenUtil.dp2px(context, 10))) {
