@@ -24,8 +24,10 @@ public class MainActivity extends FragmentActivity {
 
         BubbleWindow bubbleWindow = new BubbleWindow.Builder(MainActivity.this)
                 .setItemView(new TextItemView(MainActivity.this, "tag", "1123"))
-//                .setItemVieaw(new TextItemView(MainActivity.this, "xf", "3333"))
+                .setItemView(new TextItemView(MainActivity.this, "xf", "3333"))
                 .setDirection(Direction.BOTTOM)
+                .setSelector(false)
+                .setTheme(Theme.DARK)
                 .setPadding(0)
                 .setMargining(0)
                 .build();

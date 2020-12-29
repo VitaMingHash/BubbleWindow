@@ -54,6 +54,17 @@ public class BubbleWindow {
      */
     private int marging = 0;
 
+    /**
+     * 点击selector
+     */
+    private boolean selector = true;
+
+    /**
+     * 主题颜色
+     */
+    private @Theme
+    int theme = Theme.LIGHT;
+
     public static class Builder {
         private BubbleWindow bubbleWindow;
 
@@ -88,6 +99,16 @@ public class BubbleWindow {
             return this;
         }
 
+        public Builder setTheme(@Theme int theme) {
+            bubbleWindow.theme = theme;
+            return this;
+        }
+
+        public Builder setSelector(Boolean selector) {
+            bubbleWindow.selector = selector;
+            return this;
+        }
+
         public BubbleWindow build() {
             bubbleWindow.setBubbleWindow();
             return bubbleWindow;
@@ -101,9 +122,15 @@ public class BubbleWindow {
         if (direction == Direction.BOTTOM) {
             angleView = dialogView.findViewById(R.id.bubble_angle_top);
             dialogView.findViewById(R.id.bottom_rl).setVisibility(View.GONE);
+            if (theme == Theme.DARK) {
+                angleView.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_angle_top_dark));
+            }
         } else if (direction == Direction.TOP) {
             angleView = dialogView.findViewById(R.id.bubble_angle_bottom);
             dialogView.findViewById(R.id.top_rl).setVisibility(View.GONE);
+            if (theme == Theme.DARK) {
+                angleView.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_angle_bottom_dark));
+            }
         }
 
         LinearLayout linearLayout = dialogView.findViewById(R.id.bubble_layout);
@@ -111,20 +138,48 @@ public class BubbleWindow {
             //设置item的selector
             switch (baseItemViewList.size()) {
                 case 1:
-                    baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_one_selector));
+                    if (theme == Theme.LIGHT) {
+                        if (selector) {
+                            baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_one_selector));
+                        } else {
+                            baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_background));
+                        }
+                    } else {
+                        baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_background_dark));
+                    }
                     break;
                 default:
-                    baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_top_selector));
-                    baseItemViewList.get(baseItemViewList.size() - 1).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_bottom_selector));
+                    if (theme == Theme.LIGHT) {
+                        if (selector) {
+                            baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_top_selector));
+                            baseItemViewList.get(baseItemViewList.size() - 1).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_bottom_selector));
+                        } else {
+                            baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_top));
+                            baseItemViewList.get(baseItemViewList.size() - 1).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_bottom));
+                        }
+                    } else {
+                        baseItemViewList.get(0).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_top_dark));
+                        baseItemViewList.get(baseItemViewList.size() - 1).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_bottom_dark));
+                    }
+
+
                     if (baseItemViewList.size() > 2) {
                         for (int i = 1; i < baseItemViewList.size() - 1; i++) {
-                            baseItemViewList.get(i).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_center_selector));
+                            if (theme == Theme.LIGHT) {
+                                if (selector) {
+                                    baseItemViewList.get(i).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_center_selector));
+                                } else {
+                                    baseItemViewList.get(i).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_center));
+                                }
+                            } else {
+                                baseItemViewList.get(i).view.setBackground(ContextCompat.getDrawable(context, R.drawable.bubblewindow_item_center_dark));
+                            }
                         }
                     }
                     break;
             }
             //设置角的selector
-            if (direction == Direction.BOTTOM) {
+            if (direction == Direction.BOTTOM && selector && theme == Theme.LIGHT) {
                 baseItemViewList.get(0).view.setOnTouchListener((v, event) -> {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -150,8 +205,7 @@ public class BubbleWindow {
                     return true;
                 });
             }
-
-            if (direction == Direction.TOP) {
+            if (direction == Direction.TOP && selector && theme == Theme.LIGHT) {
                 baseItemViewList.get(baseItemViewList.size() - 1).view.setOnTouchListener((v, event) -> {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
@@ -177,6 +231,7 @@ public class BubbleWindow {
                     return true;
                 });
             }
+
 
             //设置点击事件以及item
             for (int i = 0; i < baseItemViewList.size(); i++) {
@@ -251,7 +306,7 @@ public class BubbleWindow {
             int commonY = 0;
             if (context instanceof AppCompatActivity && ((AppCompatActivity) context).getSupportActionBar() != null) {
                 if (((AppCompatActivity) context).getSupportActionBar().isShowing()) {
-                    commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context)+ ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
+                    commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context) + ScreenUtil.getActionBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
                 }
             } else {
                 commonY = (int) windowLocation[1] - ScreenUtil.getStatusBarHeight(context) + view.getHeight() - ScreenUtil.dp2px(context, marging);
