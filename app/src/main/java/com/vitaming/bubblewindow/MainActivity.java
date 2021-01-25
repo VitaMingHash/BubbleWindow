@@ -1,47 +1,44 @@
 package com.vitaming.bubblewindow;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
+import androidx.activity.ComponentActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vitaming.bubblewindow.itemview.TextItemView;
 
 
-public class MainActivity extends FragmentActivity {
-    private RelativeLayout rl;
+public class MainActivity extends ComponentActivity {
+    private TextView btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        TextView btn = findViewById(R.id.btn);
-        rl = findViewById(R.id.rl);
+        btn = findViewById(R.id.btn);
 
         BubbleWindow bubbleWindow = new BubbleWindow.Builder(MainActivity.this)
                 .setItemView(new TextItemView(MainActivity.this, "tag", "1123"))
                 .setItemView(new TextItemView(MainActivity.this, "xf", "3333"))
-                .setDirection(Direction.BOTTOM)
+                .setDirection(Direction.TOP)
+                .setOnItemClick(new OnItemClick() {
+                    @Override
+                    public void onClick(String tag, int position, BubbleWindow bubbleWindow) {
+
+                    }
+                })
                 .setSelector(false)
                 .setTheme(Theme.DARK)
                 .setPadding(0)
                 .setMargining(0)
                 .build();
-
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                bubbleWindow.show(btn);
-//            }
-//        });
-        rl.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bubbleWindow.show(rl);
+                bubbleWindow.show(btn);
             }
         });
     }

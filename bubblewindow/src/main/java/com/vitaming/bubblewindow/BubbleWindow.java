@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -29,6 +30,7 @@ import java.util.List;
 public class BubbleWindow {
     private List<BaseItemView> baseItemViewList = new ArrayList<>();
     private OnItemClick onItemClick;
+    private View clickView;
 
     /**
      * 弹窗宽度
@@ -72,38 +74,38 @@ public class BubbleWindow {
             bubbleWindow = new BubbleWindow();
             bubbleWindow.context = context;
         }
-
+        //弹窗距离屏幕距离
         public Builder setPadding(int padding) {
             bubbleWindow.padding = padding;
             return this;
         }
-
+        //弹窗距离弹出的view距离
         public Builder setMargining(int marging) {
             bubbleWindow.marging = marging;
             return this;
         }
-
+        //弹窗方向
         public Builder setDirection(@Direction int direction) {
             bubbleWindow.direction = direction;
             return this;
         }
-
+        //添加子item
         public Builder setItemView(BaseItemView itemView) {
             itemView.setView();
             bubbleWindow.baseItemViewList.add(itemView);
             return this;
         }
-
+        //弹窗item点击事件
         public Builder setOnItemClick(OnItemClick onItemClick) {
             bubbleWindow.onItemClick = onItemClick;
             return this;
         }
-
+        //弹窗主题白色黑色
         public Builder setTheme(@Theme int theme) {
             bubbleWindow.theme = theme;
             return this;
         }
-
+        //弹窗点击selector
         public Builder setSelector(Boolean selector) {
             bubbleWindow.selector = selector;
             return this;
@@ -380,8 +382,19 @@ public class BubbleWindow {
      */
     public void show(View view) {
         if (baseItemViewList.size() > 0) {
+            clickView = view;
             setPosition(view);
         }
+    }
+
+    /**
+     * 返回点击的View
+     *
+     * @return view
+     */
+    @Nullable
+    public View getView() {
+        return clickView;
     }
 
     /**
